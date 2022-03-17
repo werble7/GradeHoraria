@@ -65,3 +65,4 @@ if __name__ == '__main__':
                 print(turnos[i], " ", detectaTurno(turnos[i]))
 
         entrada = input()
+
