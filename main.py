@@ -41,9 +41,30 @@ def trataErro(entrada):
     return
 
 
+def incluiDisciplina(pDisciplina, pTurnos, pRegistro):
+    grade[pRegistro][0] = pDisciplina
+    grade[pRegistro][1] = pTurnos
+
+
+def excluiDisciplina(pDisciplina, pTurnos):
+    for i in range(len(grade)):
+        if grade[i][0] == pDisciplina and grade[i][1] == pTurnos:
+            grade[i][0] = 0
+            grade[i][1] = 0
+
+
+def imprime():
+    for i in range(len(grade)):
+        if grade[i][0] != 0:
+            print(grade[i][0], "-", grade[i][1])
+
+
 if __name__ == '__main__':
 
-    disciplinas = []
+    # coluna 0 - disciplina
+    # coluna 1 - turnos
+    ctRegistro = 0
+    grade = [[0 for _ in range(2)] for _ in range(10)]
     entrada = input()
     tiposTurno = "MTN"
 
@@ -53,14 +74,19 @@ if __name__ == '__main__':
         if verificaErro == "erro":
             erro(entrada)
         elif verificaErro == "tabela":
-            tabela()
+            imprime()
         else:
             operacao, disciplina, horario = entrada.split(" ", 2)
-            print(operacao)
-            print(disciplina)
-            print(horario)
-            print("----------------")
+            #print(operacao)
+            #print(disciplina)
+            #print(horario)
             turnos = horario.split()
+            print("----------------")
+            if operacao == "+":
+                incluiDisciplina(disciplina, turnos, ctRegistro)
+                ctRegistro += 1
+            elif operacao == "-":
+                excluiDisciplina(disciplina, turnos)
             for i in range(len(turnos)):
                 print(turnos[i], " ", detectaTurno(turnos[i]))
 
