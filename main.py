@@ -2,12 +2,19 @@ def tabela():
     dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab']
     print("+" + "-"*15 + ("+" + "-"*10)*6 + "+")
     print("|" + " "*15 + "|", end="")
-    for i in range(6):
-        print(" " + dias[i] + " "*6 + "|", end="")
+    for dsemana in range(6):
+        print(" " + dias[dsemana] + " "*6 + "|", end="")
     print("")
     print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
     for j in range(quantidadeLinhas()):
-        print("|" + " " + str(grade[j][1]) + " "*(14 - len(str(grade[j][1]))) + ("|" + " "*10)*6 + "|")
+        #print("|" + " " + str(grade[j][1]) + " "*(14 - len(str(grade[j][1]))) + ("|" + str(grade[j][0]) + " "*(10 - len(str(grade[j][0]))))*6 + "|")
+        print("|" + " " + str(grade[j][1]) + " " * (14 - len(str(grade[j][1]))), end="")
+        print("|" + " " * 10, end="")
+        print("|" + " " * 10, end="")
+        print("|" + " " * 10, end="")
+        print("|" + " " * 10, end="")
+        print("|" + " " * 10, end="")
+        print("|" + " " * 10 + "|")
         print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
 
 
@@ -18,6 +25,14 @@ def erro(mensagem):
 def detectaTurno(horario):
     listaDias = []
     posicao = -1
+    turnos = horario.split()
+
+    if len(turnos) >= 1:
+        for i in range(len(turnos)):
+            if not(turnos[i][0].isnumeric()):
+                return "erro"
+    if not(horario[0].isnumeric()):
+        return "erro"
     for i in range(3):
         posicao = horario.find(tiposTurno[i])
         if posicao != -1:
@@ -30,25 +45,37 @@ def detectaTurno(horario):
     return "erro"
 
 
-def detectaDisciplina(entrada):
-    operacao, disciplina, horario = entrada.split()
+#def detectaDisciplina(entrada):
+    #operacao, disciplina, horario = entrada.split()
 
 
-def trataErro(entrada):
-    if entrada == "":
+def atualizaRegistro(registro):
+    if registro >= len(grade):
+        for i in range(len(grade)):
+            if grade[i][0] == 0 and grade[i][1] == 0:
+                return i
+    else:
+        return registro - 1
+
+
+def trataErro(entradaerro):
+    if entradaerro == "":
         return "erro"
-    elif entrada[0] != "+" and entrada[0] != "-" and entrada[0] != "?":
+    elif entradaerro[0] != "+" and entradaerro[0] != "-" and entradaerro[0] != "?":
         return "erro"
-    elif entrada[0] != "?" and entrada[1] != " ":
+    elif entradaerro[0] != "?" and entradaerro[1] != " ":
         return "erro"
-    elif entrada[0] == "?" and len(entrada) > 1:
+    elif entradaerro[0] == "?" and len(entradaerro) > 1:
         return "erro"
-    elif entrada[0] == "?":
+    elif entradaerro[0] == "?":
         return "tabela"
     return
 
 
 def incluiDisciplina(pDisciplina, pTurnos, pRegistro):
+    for i in range(len(grade)):
+        if grade[i][1] == pTurnos:
+            return "erro"
     grade[pRegistro][0] = pDisciplina
     grade[pRegistro][1] = pTurnos
 
@@ -59,6 +86,8 @@ def excluiDisciplina(pDisciplina, pHorario):
             grade[i][0] = 0
             grade[i][1] = 0
             atualizaDisciplina()
+            return
+    return "erro"
 
 
 def atualizaDisciplina():
@@ -102,18 +131,32 @@ if __name__ == '__main__':
             tabela()
         else:
             operacao, disciplina, horario = entrada.split(" ", 2)
+
+            if detectaTurno(horario) == "erro":
+                erro(entrada)
             #print(operacao)
             #print(disciplina)
             #print(horario)
             turnos = horario.split()
             print("----------------")
-            if operacao == "+":
+
+            if operacao == "+" and detectaTurno(horario) != "erro":
                 for i in range(len(turnos)):
-                    incluiDisciplina(disciplina, turnos[i], ctRegistro)
-                    ctRegistro += 1
+                    if incluiDisciplina(disciplina, turnos[i], ctRegistro) == "erro":
+                        erro(entrada)
+                    else:
+                        ctRegistro += 1
             elif operacao == "-":
-                excluiDisciplina(disciplina, horario)
+                if excluiDisciplina(disciplina, horario) == "erro":
+                    erro(entrada)
+                else:
+                    ctRegistro = atualizaRegistro(ctRegistro)
+
             for i in range(len(turnos)):
                 print(turnos[i], " ", detectaTurno(turnos[i]))
+                print(ctRegistro)
+            print("-----------------")
+            for j in range(len(grade)):
+                print(grade[j][0] + grade[j][1])
 
         entrada = input()
