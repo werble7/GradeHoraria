@@ -1,5 +1,6 @@
 def tabela():
     dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab']
+    dia = ""
     print("+" + "-"*15 + ("+" + "-"*10)*6 + "+")
     print("|" + " "*15 + "|", end="")
     for dsemana in range(6):
@@ -9,12 +10,14 @@ def tabela():
     for j in range(quantidadeLinhas()):
         #print("|" + " " + str(grade[j][1]) + " "*(14 - len(str(grade[j][1]))) + ("|" + str(grade[j][0]) + " "*(10 - len(str(grade[j][0]))))*6 + "|")
         print("|" + " " + str(grade[j][1]) + " " * (14 - len(str(grade[j][1]))), end="")
-        print("|" + " " * 10, end="")
-        print("|" + " " * 10, end="")
-        print("|" + " " * 10, end="")
-        print("|" + " " * 10, end="")
-        print("|" + " " * 10, end="")
-        print("|" + " " * 10 + "|")
+        if str(grade[j][1])[0] == "2":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)), end="")
+        print("| " + " " * 9, end="")
+        print("| " + " " * 9, end="")
+        print("| " + " " * 9, end="")
+        print("| " + " " * 9, end="")
+        print("| " + " " * 9 + "|")
         print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
 
 
