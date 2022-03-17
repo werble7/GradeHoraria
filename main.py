@@ -55,12 +55,13 @@ if __name__ == '__main__':
         elif verificaErro == "tabela":
             tabela()
         else:
-            operacao, disciplina, horario = entrada.split(" ", 3)
+            operacao, disciplina, horario = entrada.split(" ", 2)
             print(operacao)
             print(disciplina)
             print(horario)
-
-            turno = detectaTurno(horario)
-            print(turno)
+            print("----------------")
+            turnos = horario.split()
+            for i in range(len(turnos)):
+                print(turnos[i], " ", detectaTurno(turnos[i]))
 
         entrada = input()
