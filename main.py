@@ -13,11 +13,27 @@ def tabela():
         if str(grade[j][1])[0] == "2":
             dia = str(grade[j][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
-        print("| " + " " * 9, end="")
-        print("| " + " " * 9, end="")
-        print("| " + " " * 9, end="")
-        print("| " + " " * 9, end="")
-        print("| " + " " * 9 + "|")
+        dia = ""
+        if str(grade[j][1])[0] == "3":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)), end="")
+        dia = ""
+        if str(grade[j][1])[0] == "4":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)), end="")
+        dia = ""
+        if str(grade[j][1])[0] == "5":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)), end="")
+        dia = ""
+        if str(grade[j][1])[0] == "6":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)), end="")
+        dia = ""
+        if str(grade[j][1])[0] == "7":
+            dia = str(grade[j][0])
+        print("| " + dia + " " * (9 - len(dia)))
+        dia = ""
         print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
 
 
@@ -45,6 +61,31 @@ def detectaTurno(horario):
             listaDias.append(posicao)
             return listaDias
             #return tiposTurno[i] + str(posicao)
+    return "erro"
+
+def transformaHorario(horario):
+    turnos = []
+    turnos = horario.split()
+    listaDias = []
+    posicao = -1
+
+    if len(turnos) == 1:
+        if not(str(turnos[0])[0].isnumeric()):
+            return "erro"
+        elif len(str(turnos[0])) == 3:
+            return turnos
+        else:
+            for i in range(3):
+                posicao = str(turnos[0]).find(tiposTurno[i])
+                if posicao != -1:
+                    for j in range(posicao):
+                        # listaDias.append(str(str(turnos[0])[j]) + str((turnos[0])[posicao]) + str(str(turnos[0])[posicao]))
+                        for k in range(posicao + 1, len(str(turnos[0]))):
+                            listaDias.append(str(str(turnos[0])[j]) + str((turnos[0])[posicao]) + str(str(turnos[0])[k]))
+                    return listaDias
+                        #listaDias[j] = str(str(turnos[0])[j])
+                    #return listaDias
+
     return "erro"
 
 
@@ -123,7 +164,7 @@ if __name__ == '__main__':
     ctRegistro = 0
     grade = [[0 for _ in range(2)] for _ in range(10)]
     entrada = input()
-    tiposTurno = "MTN"
+    tiposTurno = "MNT"
 
     while entrada != "Hasta la vista, beibe!":
 
@@ -135,17 +176,18 @@ if __name__ == '__main__':
         else:
             operacao, disciplina, horario = entrada.split(" ", 2)
 
-            if detectaTurno(horario) == "erro":
+            if transformaHorario(horario) == "erro":
                 erro(entrada)
             #print(operacao)
             #print(disciplina)
             #print(horario)
-            turnos = horario.split()
+            turnos = transformaHorario(horario)
             print("----------------")
 
-            if operacao == "+" and detectaTurno(horario) != "erro":
+            if operacao == "+" and transformaHorario(horario) != "erro":
                 for i in range(len(turnos)):
                     if incluiDisciplina(disciplina, turnos[i], ctRegistro) == "erro":
+                    # necessita tratativa de disciplina(max.:letras)
                         erro(entrada)
                     else:
                         ctRegistro += 1
@@ -155,9 +197,9 @@ if __name__ == '__main__':
                 else:
                     ctRegistro = atualizaRegistro(ctRegistro)
 
-            for i in range(len(turnos)):
-                print(turnos[i], " ", detectaTurno(turnos[i]))
-                print(ctRegistro)
+            #for i in range(len(turnos)):
+                #print(turnos[i], " ", detectaTurno(turnos[i]))
+            print(ctRegistro)
             print("-----------------")
             for j in range(len(grade)):
                 print(grade[j][0] + grade[j][1])
