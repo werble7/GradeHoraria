@@ -1,38 +1,54 @@
 def tabela():
     dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab']
     dia = ""
-    print("+" + "-"*15 + ("+" + "-"*10)*6 + "+")
-    print("|" + " "*15 + "|", end="")
-    for dsemana in range(6):
-        print(" " + dias[dsemana] + " "*6 + "|", end="")
     print("")
     print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
+    print("|" + " " * 15 + "|", end="")
+    for dsemana in range(6):
+        print(" " + dias[dsemana] + " " * 6 + "|", end="")
+    print("")
+    print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
+
     for i in range(15):
+
         if grade[i][1] == 0 and grade[i+15][1] == 0 and grade[i+30][1] == 0 and grade[i+45][1] == 0 and grade[i+60][1] == 0 and grade[i+75][1] == 0:
             continue
-        print("|" + " " + formatarHorarioSigla(str(grade[i][1])[1:3]) + " ", end="")
+        x = 0
+        if grade[i+15][1] != 0:
+            x = 15
+        elif grade[i+30][1] != 0:
+            x = 30
+        elif grade[i+45][1] != 0:
+            x = 45
+        elif grade[i+60][1] != 0:
+            x = 60
+        elif grade[i+75][1] != 0:
+            x = 75
+
+        print("|" + " " + formatarHorarioSigla(str(grade[i+x][1])[1:3]) + " ", end="")
+
         if str(grade[i][1])[0] == "2":
             dia = str(grade[i][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
         dia = " "
         if str(grade[i+15][1])[0] == "3":
-            dia = str(grade[i][0])
+            dia = str(grade[i+15][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
         dia = ""
         if str(grade[i+30][1])[0] == "4":
-            dia = str(grade[i][0])
+            dia = str(grade[i+30][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
         dia = ""
         if str(grade[i+45][1])[0] == "5":
-            dia = str(grade[i][0])
+            dia = str(grade[i+45][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
         dia = ""
         if str(grade[i+60][1])[0] == "6":
-            dia = str(grade[i][0])
+            dia = str(grade[i+60][0])
         print("| " + dia + " " * (9 - len(dia)), end="")
         dia = ""
         if str(grade[i+75][1])[0] == "7":
-            dia = str(grade[i][0])
+            dia = str(grade[i+75][0])
         print("| " + dia + " " * (9 - len(dia)) + "|")
         dia = ""
         print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
@@ -242,7 +258,7 @@ if __name__ == '__main__':
             if transformaHorario(horario) == "erro":
                 erro(entrada)
             turnos = transformaHorario(horario)
-            print("----------------")
+            #print("----------------")
 
             if operacao == "+" and turnos != "erro" and len(disciplina) < 9:
                 for i13 in range(len(turnos)):
@@ -257,9 +273,12 @@ if __name__ == '__main__':
                 else:
                     ctRegistro = atualizaRegistro(ctRegistro)
 
+            '''
             print(ctRegistro)
             print("-----------------")
             for i14 in range(len(grade)):
                 print(str(grade[i14][0]) + str(grade[i14][1]))
+            '''
 
         entrada = input()
+    print("")
