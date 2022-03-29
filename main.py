@@ -13,19 +13,19 @@ def tabela():
 
         if grade[i][1] == 0 and grade[i+15][1] == 0 and grade[i+30][1] == 0 and grade[i+45][1] == 0 and grade[i+60][1] == 0 and grade[i+75][1] == 0:
             continue
-        x = 0
+        contadorDias = 0
         if grade[i+15][1] != 0:
-            x = 15
+            contadorDias = 15
         elif grade[i+30][1] != 0:
-            x = 30
+            contadorDias = 30
         elif grade[i+45][1] != 0:
-            x = 45
+            contadorDias = 45
         elif grade[i+60][1] != 0:
-            x = 60
+            contadorDias =  60
         elif grade[i+75][1] != 0:
-            x = 75
+            contadorDias = 75
 
-        print("|" + " " + formatarHorarioSigla(str(grade[i+x][1])[1:3]) + " ", end="")
+        print("|" + " " + formatarHorarioSigla(str(grade[i+contadorDias][1])[1:3]) + " ", end="")
 
         if str(grade[i][1])[0] == "2":
             dia = str(grade[i][0])
@@ -212,7 +212,7 @@ def defineRegistro(pturnos):
 
 
 def incluiDisciplina(pDisciplina, pTurnos, pRegistro):
-    for i8 in range(len(grade)):
+    for i8 in range(90):
         if grade[i8][1] == pTurnos:
             return "erro"
     grade[pRegistro][0] = pDisciplina
@@ -220,7 +220,7 @@ def incluiDisciplina(pDisciplina, pTurnos, pRegistro):
 
 
 def excluiDisciplina(pDisciplina, pHorario):
-    for i9 in range(len(grade)):
+    for i9 in range(90):
         if grade[i9][0] == pDisciplina and grade[i9][1] == pHorario:
             grade[i9][0] = 0
             grade[i9][1] = 0
@@ -228,17 +228,8 @@ def excluiDisciplina(pDisciplina, pHorario):
     return "erro"
 
 
-'''
-def imprime():
-    for i12 in range(len(grade)):
-        if grade[i12][0] != 0:
-            print(grade[i12][0], "-", grade[i12][1])
-'''
-
-
 if __name__ == '__main__':
-
-    ctRegistro = 0                                                  # coluna 0 - disciplina;coluna 1 - turnos
+    # coluna 0 - disciplina;coluna 1 - turnos
     grade = [[0 for _ in range(2)] for _ in range(90)]
     entrada = input()
     tiposTurno = "MNT"
@@ -258,27 +249,17 @@ if __name__ == '__main__':
             if transformaHorario(horario) == "erro":
                 erro(entrada)
             turnos = transformaHorario(horario)
-            #print("----------------")
 
             if operacao == "+" and turnos != "erro" and len(disciplina) < 9:
                 for i13 in range(len(turnos)):
                     registro = defineRegistro(turnos[i13])
                     if incluiDisciplina(disciplina, turnos[i13], registro) == "erro":
                         erro(entrada)
-                    else:
-                        ctRegistro += 1
+                        break
             elif operacao == "-":
-                if excluiDisciplina(disciplina, horario) == "erro":
-                    erro(entrada)
-                else:
-                    ctRegistro = atualizaRegistro(ctRegistro)
-
-            '''
-            print(ctRegistro)
-            print("-----------------")
-            for i14 in range(len(grade)):
-                print(str(grade[i14][0]) + str(grade[i14][1]))
-            '''
+                for i14 in range(len(turnos)):
+                    if excluiDisciplina(disciplina, turnos[i14]) == "erro":
+                        erro(entrada)
+                        break
 
         entrada = input()
-    print("")
