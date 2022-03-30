@@ -1,7 +1,6 @@
 def tabela():
-    dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab']
+    dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
     dia = ""
-    print("")
     print("+" + "-" * 15 + ("+" + "-" * 10) * 6 + "+")
     print("|" + " " * 15 + "|", end="")
     for dsemana in range(6):
@@ -21,7 +20,7 @@ def tabela():
         elif grade[i+45][1] != 0:
             contadorDias = 45
         elif grade[i+60][1] != 0:
-            contadorDias =  60
+            contadorDias = 60
         elif grade[i+75][1] != 0:
             contadorDias = 75
 
@@ -124,7 +123,7 @@ def formatarHorarioSigla(turno):
     if horario == 1:
         return "08:00 - 08:55"
     elif horario == 2:
-        return "08:55 - 09:00"
+        return "08:55 - 09:50"
     elif horario == 3:
         return "10:00 - 10:55"
     elif horario == 4:
@@ -229,6 +228,7 @@ def excluiDisciplina(pDisciplina, pHorario):
 
 
 if __name__ == '__main__':
+
     # coluna 0 - disciplina;coluna 1 - turnos
     grade = [[0 for _ in range(2)] for _ in range(90)]
     entrada = input()
