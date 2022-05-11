@@ -61,10 +61,11 @@ def transformaHorario(horario):
     turnos = horario.split()
     listaDias = []
     posicao = -1
+    tiposTurno = "MNT"
 
     if len(turnos) == 1:
-        x = str(turnos[0])[0]
-        if not(str(turnos[0])[0].isnumeric()) or x == '1' or x == '8' or x == '9' or x == '0':
+        dia = str(turnos[0])[0]
+        if not(dia.isnumeric()) or dia == '1' or dia == '8' or dia == '9' or dia == '0':
             return "erro"
         elif len(str(turnos[0])) == 3:
             letra = str(turnos[0])[1]
@@ -89,20 +90,19 @@ def transformaHorario(horario):
                 if posicao != -1:
                     for i3 in range(posicao):
                         for i4 in range(posicao + 1, len(str(turnos[0]))):
-                            x = str(str(turnos[0])[i3]) + str((turnos[0])[posicao]) + str(turnos[0])[i4]
-                            if transformaHorario(x) != "erro":
-                                listaDias.append(x)
+                            dia = str(str(turnos[0])[i3]) + str((turnos[0])[posicao]) + str(turnos[0])[i4]
+                            if transformaHorario(dia) != "erro":
+                                listaDias.append(dia)
                             else:
                                 return "erro"
                     return listaDias
     else:
-        x = []
         for i5 in range(len(turnos)):
-            x = transformaHorario(turnos[i5])
-            if x == "erro":
+            dia = transformaHorario(turnos[i5])
+            if dia == "erro":
                 return "erro"
-            for i6 in range(len(x)):
-                listaDias.append(str(x[i6]))
+            for i6 in range(len(dia)):
+                listaDias.append(str(dia[i6]))
         return listaDias
     return "erro"
 
@@ -160,21 +160,20 @@ def atualizaRegistro(registro):
             if grade[i7][0] == 0 and grade[i7][1] == 0:
                 return i7
     else:
-        return registro - 1
+        return (registro - 1)
 
 
 def trataEntrada(entradaerro):
     if entradaerro == "":
         return "erro"
-    elif entradaerro[0] != "+" and entradaerro[0] != "-" and entradaerro[0] != "?":
+    if entradaerro[0] != "+" and entradaerro[0] != "-" and entradaerro[0] != "?":
         return "erro"
-    elif entradaerro[0] != "?" and entradaerro[1] != " ":
+    if entradaerro[0] != "?" and entradaerro[1] != " ":
         return "erro"
-    elif entradaerro[0] == "?" and len(entradaerro) > 1:
+    if entradaerro[0] == "?" and len(entradaerro) > 1:
         return "erro"
-    elif entradaerro[0] == "?":
+    if entradaerro[0] == "?":
         return "tabela"
-    return
 
 
 def defineRegistro(pturnos):
@@ -229,10 +228,8 @@ def excluiDisciplina(pDisciplina, pHorario):
 
 if __name__ == '__main__':
 
-    # coluna 0 - disciplina;coluna 1 - turnos
     grade = [[0 for _ in range(2)] for _ in range(90)]
     entrada = input()
-    tiposTurno = "MNT"
 
     while entrada != "Hasta la vista, beibe!":
 
