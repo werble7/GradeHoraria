@@ -229,11 +229,18 @@ def excluiDisciplina(pDisciplina, pHorario):
 if __name__ == '__main__':
 
     grade = [[0 for _ in range(2)] for _ in range(90)]
+
+    print("-------------------------------------------\n")
+    print("       Gerenciador de grade horária")
+    print("     Digite help para ver os comandos\n")
+    print("-------------------------------------------\n")
+
     entrada = input()
 
-    while entrada != "Hasta la vista, beibe!":
+    while entrada != "exit" and entrada != "Hasta la vista, beibe!":
 
         verificaErro = trataEntrada(entrada)
+
         if verificaErro == "erro":
             erro(entrada)
         elif verificaErro == "tabela":
@@ -260,3 +267,5 @@ if __name__ == '__main__':
                         break
 
         entrada = input()
+
+    print("Obrigado por me usar!")
