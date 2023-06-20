@@ -230,11 +230,6 @@ if __name__ == '__main__':
 
     grade = [[0 for _ in range(2)] for _ in range(90)]
 
-    print("-------------------------------------------\n")
-    print("       Gerenciador de grade horária")
-    print("     Digite help para ver os comandos\n")
-    print("-------------------------------------------\n")
-
     entrada = input()
 
     while entrada != "exit" and entrada != "Hasta la vista, beibe!":
